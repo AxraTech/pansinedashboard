@@ -2,9 +2,19 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faRectangleXmark} from "@fortawesome/free-solid-svg-icons";
 import avatar from "../../assets/avatar.jpg"
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
 
 // eslint-disable-next-line react/prop-types
 const UserProfile = ({ setClickProfile }) => {
+    const navigate = useNavigate();
+
+    const logoutHanlder = () => {
+        setClickProfile(false);
+        window.localStorage.removeItem("login");
+        toast("Logout Successfully");
+        navigate("/");
+    }
+
     return (
         <div className="absolute right-1 top-16 bg-white p-8 rounded-lg border w-96 z-40 shadow-lg">
             <div className="flex justify-between items-center">
@@ -28,7 +38,7 @@ const UserProfile = ({ setClickProfile }) => {
             </div>
 
             <div className="mt-5">
-                <button className="w-full bg-red-600 text-white rounded-md py-3 hover:bg-red-400" onClick={() => toast("Logout Successfully")}>
+                <button className="w-full bg-red-600 text-white rounded-md py-3 hover:bg-red-400" onClick={logoutHanlder}>
                     Logout
                 </button>
             </div>

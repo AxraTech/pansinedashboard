@@ -1,10 +1,11 @@
-import {Outlet} from "react-router-dom";
+import {Outlet, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import SideBar from "../components/layout/SideBar.jsx";
 import NavBar from "../components/layout/NavBar.jsx";
 
 const Layout = () => {
     const [activeMenu, setActiveMenu] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const showSideBar = window.localStorage.getItem("showSideBar");
@@ -12,6 +13,10 @@ const Layout = () => {
         if(showSideBar !== null){
             const isActive = showSideBar.toLocaleLowerCase() === "true";
             setActiveMenu(isActive)
+        }
+
+        if(!window.localStorage.getItem("login")){
+            navigate("/");
         }
     }, [activeMenu]);
 
