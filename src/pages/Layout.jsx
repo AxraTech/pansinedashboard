@@ -1,15 +1,23 @@
 import {Outlet} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import SideBar from "../components/layout/SideBar.jsx";
 import NavBar from "../components/layout/NavBar.jsx";
 
 const Layout = () => {
     const [activeMenu, setActiveMenu] = useState(true);
 
+    useEffect(() => {
+        const showSideBar = window.localStorage.getItem("showSideBar");
+
+        if(showSideBar !== null){
+            const isActive = showSideBar.toLocaleLowerCase() === "true";
+            setActiveMenu(isActive)
+        }
+    }, [activeMenu]);
+
     return (
         <div className="container h-screen grid grid-cols-12 overflow-hidden">
             {/*Start Side Bar*/}
-            {/*<div className="flex relative">*/}
             <div className="col-span-2 w-full">
                 <SideBar activeMenu={activeMenu} setActiveMenu={setActiveMenu}/>
             </div>
@@ -21,8 +29,10 @@ const Layout = () => {
                     <NavBar activeMenu={activeMenu} setActiveMenu={setActiveMenu}/>
                     {/*End Nav Bar*/}
 
-                    <div className="row-span-11 overflow-hidden">
-                        <Outlet/>
+                    <div className="row-span-11 overflow-y-auto">
+                        <div className="w-full h-full px-2 md:px-8">
+                            <Outlet/>
+                        </div>
                     </div>
                 </div>
             </div>

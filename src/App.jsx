@@ -5,7 +5,9 @@ import MainRouter from "./router/MainRouter.jsx";
 import {ApolloProvider} from "@apollo/client";
 import createApolloClient from "./graphql/apolloClient.jsx";
 import {LoadingProvider} from "./contexts/LoadingContext.jsx";
-import Loading from "./pages/Loading.jsx";
+import Loading from "./components/Loading.jsx";
+import ModalBox from "./components/ModalBox.jsx";
+import {ModalProvider} from "./contexts/ModalContext.jsx";
 
 function App() {
 
@@ -14,11 +16,15 @@ function App() {
     return (
         <ApolloProvider client={apolloClient}>
             <LoadingProvider>
-                <MainRouter />
+                <ModalProvider>
+                    <MainRouter />
 
-                <ToastContainer/>
+                    <ToastContainer/>
 
-                <Loading/>
+                    <Loading/>
+
+                    <ModalBox />
+                </ModalProvider>
             </LoadingProvider>
         </ApolloProvider>
     )

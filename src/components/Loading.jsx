@@ -2,14 +2,13 @@ import {useContext} from "react";
 import LoadingContext from "../contexts/LoadingContext.jsx";
 
 const Loading = () => {
-    const { loading } = useContext(LoadingContext);
+    const { loading, loadingText } = useContext(LoadingContext);
 
     return(
         <>
             {
                 loading &&
-                    <div
-                        className="w-full h-screen bg-gray-600 bg-opacity-50 fixed left-0 top-0 flex justify-center items-center z-50">
+                    <div className="w-full h-screen bg-gray-600 bg-opacity-50 fixed left-0 top-0 flex justify-center items-center z-50">
                         <div className="w-3/4 md:w-1/4 h-1/6 bg-white rounded shadow-md flex flex-col justify-center items-center">
                             <div role="status">
                                 <svg aria-hidden="true"
@@ -25,7 +24,7 @@ const Loading = () => {
                                 <span className="sr-only">Loading...</span>
                             </div>
 
-                            <p className="font-bold mt-3">Loading...</p>
+                            <p className="font-bold mt-3">{loadingText}...</p>
                         </div>
                     </div>
             }

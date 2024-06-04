@@ -5,22 +5,24 @@ import {faRectangleXmark} from "@fortawesome/free-solid-svg-icons";
 
 // eslint-disable-next-line react/prop-types
 const SideBar = ({ activeMenu, setActiveMenu }) => {
-    const handleCloseSideBar = () => {
-    }
-
     const activeLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg  text-white bg-gray-700  text-md m-2';
     const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 hover:bg-gray-700 hover:text-white m-2';
 
+    // Start Function
+    const closeHandler =  () => {
+        setActiveMenu(false);
+        window.localStorage.setItem("showSideBar", false);
+    }
 
     return (
         <div className={`${activeMenu ? "w-72 shadow-lg" : "w-0"} fixed bg-white z-50`}>
             <div className="h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10 mx-2">
                 <div className="flex justify-between items-center pb-5">
-                    <Link to="/" onClick={handleCloseSideBar}  className="items-center gap-3 ml-3 mt-4 flex text-2xl font-extrabold tracking-tight  text-slate-900">
+                    <Link to="/"  className="items-center gap-3 ml-3 mt-4 flex text-2xl font-extrabold tracking-tight  text-slate-900">
                          <span>Pan Sine</span>
                     </Link>
 
-                    <button onClick={() => setActiveMenu(false)} className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden">
+                    <button onClick={closeHandler} className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden">
                         <FontAwesomeIcon icon={faRectangleXmark} />
                     </button>
                 </div>

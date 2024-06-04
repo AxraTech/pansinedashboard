@@ -8,9 +8,16 @@ import UserProfile from "./UserProfile.jsx";
 const NavBar = ({ activeMenu, setActiveMenu }) => {
     const [clickProfile, setClickProfile] = useState(false);
 
+    // Start Function
+    const sideBarHandler = () => {
+        setActiveMenu(!activeMenu)
+        window.localStorage.setItem("showSideBar", !activeMenu);
+    }
+    // End Function
+
     return (
         <div className="row-span-1 flex justify-between p-2 md:ml-6 md:mr-6 relative">
-            <button className="text-xl rounded-md px-3 py-1 hover:bg-gray-400 hover:text-white" onClick={() => setActiveMenu(!activeMenu)}>
+            <button className="text-xl rounded-md px-3 py-1 hover:bg-gray-400 hover:text-white" onClick={sideBarHandler}>
                 <FontAwesomeIcon icon={faBars} />
             </button>
 
