@@ -23,4 +23,23 @@ export const productFormValidation = (data) => {
     }
 
     return errors;
+};
+
+export const categoryFormValidation = (data) => {
+    const errors = {};
+
+    if(data.image_url === ""){
+        errors.image_url = 'Image is required';
+    }
+
+    if(data.category_name === ""){
+        errors.category_name = 'Category Name is required';
+    }
+
+    if(data.description === ""){
+        errors.description = 'Description is required';
+    }
+
+    return errors;
 }
+

@@ -5,7 +5,7 @@ const FormButton = ({ cancelHandler, submitHandler, cancelText, submitText }) =>
     const{ loading } = useContext(LoadingContext);
 
     return (
-        <div className="col-span-12 md:col-span-6 mb-3 flex justify-end items-end">
+        <div className="col-span-12 mb-3 flex justify-end items-end">
             <button type="button"
                     className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
                 onClick={cancelHandler}

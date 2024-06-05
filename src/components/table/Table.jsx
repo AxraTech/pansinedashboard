@@ -44,7 +44,7 @@ const Table = ({ tableHeader, data, children}) => {
                                     </svg>
                                     <span className="sr-only">Loading...</span>
                                 </div>
-                                Loading
+                                Loading ...
                             </th>
                         </tr>
                 }

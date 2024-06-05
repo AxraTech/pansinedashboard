@@ -3,7 +3,7 @@ import Header from "../../components/layout/Header.jsx";
 import FormSelect from "../../components/form/FormSelect.jsx";
 import FormUpload from "../../components/form/FormUpload.jsx";
 import {useMutation, useQuery} from "@apollo/client";
-import {PRODUCT_CATEGORY_ALL} from "../../graphql/query/productCategory.jsx";
+import {PRODUCT_SUB_CATEGORY_ALL} from "../../graphql/query/category.jsx";
 import FormTextArea from "../../components/form/FormTextArea.jsx";
 import FormButton from "../../components/form/FormButton.jsx";
 import {useContext, useEffect, useState} from "react";
@@ -31,7 +31,7 @@ const ProductEdit = () => {
     const navigate = useNavigate();
     // api call
     const { loading, data: product } = useQuery(PRODUCTS_BY_PK, { variables: { id }});
-    const { data: productCategory } = useQuery(PRODUCT_CATEGORY_ALL);
+    const { data: productCategory } = useQuery(PRODUCT_SUB_CATEGORY_ALL);
 
     const [updateProduct] = useMutation(UPDATE_PRODUCT_BY_PK, { refetchQueries: [ { query: PRODUCTS }, { query: PRODUCTS_BY_PK } ] })
 
@@ -55,7 +55,16 @@ const ProductEdit = () => {
     }
 
     const inputHandler = (value, inputName) => {
-        setData({ ...data, [inputName]: value });
+        if(inputName === "main_image_url"){
+            const file = value;
+            const fileReader = new FileReader();
+            fileReader.addEventListener("load", () => {
+                setData({ ...data, [inputName]: fileReader.result});
+            });
+            fileReader.readAsDataURL(file);
+        }else{
+            setData({ ...data, [inputName]: value });
+        }
 
         if(error[inputName]){
             delete error[inputName];
@@ -83,14 +92,10 @@ const ProductEdit = () => {
             try{
                 setLoading(true);
                 setLoadingText("Updating")
-                console.log(data);
                 await updateProduct({ variables: { id, data }  })
 
-                cancelHandler();
                 toast("Product Updated Successfully.")
-                // navigate("/product")
             }catch (e) {
-                console.log(e.message);
                 toast(e.message)
             }finally {
                 setLoading(false);
@@ -107,13 +112,14 @@ const ProductEdit = () => {
             <Header headerHandler={headerHandler} category="Product" title="Edit"/>
 
             <form className="grid grid-cols-12 gap-2">
+                <FormUpload label="Upload Image" value={data.main_image_url}  error={error?.main_image_url} customFun={(e) => inputHandler(e.target.files[0], "main_image_url")}/>
+
                 <FormInput label="Title" placeHolder="Enter Your Title" value={data.title} error={error?.title} customFun={(e) => inputHandler(e.target.value, "title")}/>
 
                 <FormInput label="Price" placeHolder="Enter Your Price" value={data.price} error={error?.price} customFun={(e) => inputHandler(e.target.value, "price")}/>
 
                 <FormSelect label="Category Type" error={error?.product_category_id} value={data.product_category_id} data={productCategory?.product_categories} customFun={(e) => inputHandler(e.target.value, "product_category_id")}/>
 
-                <FormUpload label="Upload Image" placeHolder="Upload Image" error={error?.main_image_url} customFun={(e) => inputHandler(e.target.value, "main_image_url")}/>
 
                 <FormTextArea label="Description" placeHolder="Enter Your Description"  value={data.body_html} error={error?.body_html} customFun={(e) => inputHandler(e.target.value, "body_html")}/>
 
