@@ -1,11 +1,14 @@
 import ProductLists from "../pages/product/ProductLists.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleNodes, faTable} from "@fortawesome/free-solid-svg-icons";
+import {faCircleNodes, faTable, faTableCells} from "@fortawesome/free-solid-svg-icons";
 import ProductCreate from "../pages/product/ProductCreate.jsx";
 import ProductEdit from "../pages/product/ProductEdit.jsx";
-import ProductCategoryList from "../pages/productCategory/ProductCategoryList.jsx";
-import ProductCategoryCreate from "../pages/productCategory/ProductCategoryCreate.jsx";
-import ProductCategoryEdit from "../pages/productCategory/ProductCategoryEdit.jsx";
+import ProductCategoryList from "../pages/category/ProductCategoryList.jsx";
+import ProductCategoryCreate from "../pages/category/ProductCategoryCreate.jsx";
+import ProductCategoryEdit from "../pages/category/ProductCategoryEdit.jsx";
+import SubCategoryList from "../pages/subCategory/SubCategoryList.jsx";
+import SubCategoryCreate from "../pages/subCategory/SubCategoryCreate.jsx";
+import SubCategoryEdit from "../pages/subCategory/SubCategoryEdit.jsx";
 
 export const routeData = [
     {
@@ -31,6 +34,18 @@ export const routeData = [
     {
         path: "/category/edit/:id",
         element: <ProductCategoryEdit/>
+    },
+    {
+        path: "/subcategory",
+        element: <SubCategoryList/>
+    },
+    {
+        path: "/subcategory/create",
+        element: <SubCategoryCreate/>
+    },
+    {
+        path: "/subcategory/edit/:id",
+        element: <SubCategoryEdit/>
     }
 ]
 
@@ -47,8 +62,12 @@ export const linkData = [
                 name: "Category List",
                 path: "/category",
                 icon: <FontAwesomeIcon icon={faTable} />
+            },
+            {
+                name: "Sub-Category List",
+                path: "/subcategory",
+                icon: <FontAwesomeIcon icon={faTableCells} />
             }
-        //     <FontAwesomeIcon icon="fa-solid fa-table-cells" />
         ]
     }
 ]
