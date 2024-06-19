@@ -29,6 +29,12 @@ query MyQuery($id: uuid!) {
     product_category {
       category_name
     }
+    product_media {
+      id
+      media_type
+      media_url
+      video_thumbnail_url
+    }
   }
 }
 `

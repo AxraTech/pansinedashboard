@@ -15,10 +15,9 @@ const tableHeader = ["Image", "Name", "Level", "Description", "Action"]
 const ProductCategoryList = () => {
     const navigate = useNavigate();
     // useContext
-    const { setShowModal, setId, setModalText, setType } = useContext(ModalContext);
+    const { setShowModal,  setModalText, setDeleteHandler } = useContext(ModalContext);
     // api call
     const { data: productCategory } = useQuery(PRODUCT_CATEGORY_ALL);
-    console.log(productCategory);
 
     // Start Function
     const createHandle = () => {
@@ -32,8 +31,8 @@ const ProductCategoryList = () => {
     const deleteProductHandler = (id) => {
         setModalText("Are you sure you want to delete this category?");
         setShowModal(true);
-        setId(id);
-        setType("Category")
+        // setId(id);
+        // setType("Category")
     }
     // ENd Function
     return (

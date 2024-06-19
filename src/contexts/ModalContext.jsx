@@ -50,7 +50,7 @@ export const ModalProvider = ({ children }) => {
     }
 
     return(
-        <ModalContext.Provider value={{showModal, setShowModal, modalButton, setModalButton, modalText, setModalText, id, setId, type, setType, cancelHandler, deleteHandler}}>
+        <ModalContext.Provider value={{showModal, setShowModal, setId, setType,  modalButton, setModalButton, modalText, setModalText, cancelHandler, deleteHandler}}>
             {children}
         </ModalContext.Provider>
     )

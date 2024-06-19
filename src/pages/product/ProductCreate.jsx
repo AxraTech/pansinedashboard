@@ -7,14 +7,24 @@ import {PRODUCT_SUB_CATEGORY_ALL} from "../../graphql/query/category.jsx";
 import FormTextArea from "../../components/form/FormTextArea.jsx";
 import FormButton from "../../components/form/FormButton.jsx";
 import {useContext, useState} from "react";
-import {productFormValidation} from "../../utils/formValidation.jsx";
+import {mediaFormValidation, productFormValidation} from "../../utils/formValidation.jsx";
 import {INSERT_PRODUCTS_ONE} from "../../graphql/mutation/product.jsx";
 import {PRODUCTS} from "../../graphql/query/product.jsx";
 import {toast} from "react-toastify";
 import LoadingContext from "../../contexts/LoadingContext.jsx";
 import {useNavigate} from "react-router-dom";
+import Button from "../../components/Button.jsx";
+import Table from "../../components/table/Table.jsx";
+import FormTwoUploads from "../../components/form/FormTwoUploads.jsx";
+import TableButton from "../../components/table/TableButton.jsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
+import useUploadFile from "../../utils/utils.jsx";
+
+export const mediaHeader = ["Video", "Type", "Action"]
 
 const ProductCreate = () => {
+    const [getFileUrl] = useUploadFile();
     // useState
     const [data, setData] = useState({
         title: "",
@@ -24,6 +34,15 @@ const ProductCreate = () => {
         price: ""
     });
     const [error, setError] = useState({});
+    const [showMediaForm, setShowMediaForm] = useState(false);
+    const [mediaDatas, setMediaDatas] = useState([]);
+    const [mediaData, setMediaData] = useState({
+        media_url: "",
+        video_thumbnail_url: "",
+        media_type: ""
+    });
+    const [editId, setEditId] = useState("");
+    const [mediaError, setMediaError] = useState({});
     // useContext
     const { setLoading, setLoadingText } = useContext(LoadingContext);
     // useNavigate
@@ -37,6 +56,7 @@ const ProductCreate = () => {
         navigate("/product");
     }
 
+    /* start product input*/
     const inputHandler = (value, inputName) => {
         if(inputName === "main_image_url"){
             const file = value;
@@ -76,7 +96,12 @@ const ProductCreate = () => {
             try{
                 setLoading(true);
                 setLoadingText("Creating")
-                await insertProduct({ variables: { data }  })
+
+                const imageUrl = await getFileUrl("products", data.main_image_url, "image");
+                const formData = { ...data, main_image_url: imageUrl, product_media: { data: mediaDatas } }
+
+                // product_media
+                await insertProduct({variables: { data: formData }})
 
                 cancelHandler();
                 toast("Product Created Successfully.")
@@ -88,7 +113,74 @@ const ProductCreate = () => {
             }
         }
 
+    };
+
+    /* end product input*/
+
+    /* start product media input*/
+    const addMediaHandler = () => {
+        setShowMediaForm(true);
+    };
+
+    const mediaInputHandler = (value, inputName) => {
+        if(inputName === "media_url" || inputName === "video_thumbnail_url"){
+            const file = value;
+            const fileReader = new FileReader();
+            fileReader.addEventListener("load", () => {
+                setMediaData({ ...mediaData, [inputName]: fileReader.result});
+            });
+            fileReader.readAsDataURL(file);
+        }else{
+            setMediaData({ ...mediaData, [inputName]: value });
+        }
+
+        if(mediaError[inputName]){
+            delete mediaError[inputName];
+            setMediaError(error);
+        }
     }
+
+    const mediaCancelHandler = () => {
+        setMediaData({
+            media_url: "",
+            video_thumbnail_url: "",
+            media_type: ""
+        });
+        setMediaError({});
+        setEditId("");
+    }
+
+    const mediaSubmitHandler = () => {
+        const newErrors = mediaFormValidation(mediaData);
+        setMediaError(newErrors)
+
+        if(Object.keys(newErrors).length === 0) {
+            if(editId !== ""){
+                const copArr = [ ...mediaDatas ];
+                copArr[editId] = mediaData;
+                setMediaDatas(copArr);
+                setEditId("");
+            }else{
+                setMediaDatas([ ...mediaDatas, mediaData ]);
+            }
+            mediaCancelHandler();
+        }
+
+    }
+
+    const editMediaHandler = (id) => {
+        setShowMediaForm(true);
+        setMediaData(mediaDatas[id]);
+        setEditId(id);
+    }
+
+    const deleteMediaHandler = (id) => {
+        const copArr = [ ...mediaDatas ];
+        copArr.splice(id, 1);
+        setMediaDatas(copArr);
+    }
+    /* end product media input*/
+
     // End Function
 
     return (
@@ -108,6 +200,53 @@ const ProductCreate = () => {
 
                 <FormButton processing={false} cancelHandler={cancelHandler} submitHandler={submitHandler} cancelText="Cancel" submitText="Submit"/>
             </form>
+
+            <hr className="shadow-md"/>
+
+            {/*Start Media */}
+            <div className="my-5">
+                <div className="flex mb-3">
+                    <p className="text-2xl font-extrabold tracking-tight text-slate-900 mr-5">Media</p>
+
+                    <Button title="Create" customFun={addMediaHandler}/>
+                </div>
+
+                {
+                    showMediaForm &&
+                        <form className="grid grid-cols-12 gap-2 border-y-2 my-5 py-2">
+                            <FormTwoUploads label1="upload1" label2="upload2" value1={mediaData.media_url} value2={mediaData.video_thumbnail_url} error1={mediaError?.media_url} error2={mediaError?.video_thumbnail_url} customFun1={(e) => mediaInputHandler(e.target.files[0], "media_url")} customFun2={(e) => mediaInputHandler(e.target.files[0], "video_thumbnail_url")}/>
+
+                            <FormInput label="Media Type *" placeHolder="Enter Your Media Type" value={mediaData.media_type} error={mediaError?.media_type} customFun={(e) => mediaInputHandler(e.target.value, "media_type")}/>
+
+                            <FormButton processing={false} cancelHandler={mediaCancelHandler} submitHandler={mediaSubmitHandler} cancelText="Cancel" submitText="Submit"/>
+                    </form>
+                }
+
+                <Table tableHeader={mediaHeader} data={mediaDatas}>
+                    {
+                        mediaDatas.map( (data, index) => (
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                                key={index}>
+                                <td className="px-6 py-4">
+                                    <img src={data.media_url} className="w-14 h-14 rounded-full" alt="image"/>
+                                </td>
+                                <td className="px-6 py-4">
+                                    {data.media_type}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <TableButton color={"bg-blue-500"} hoverColor={"hover:bg-blue-700"}
+                                                 customFun={() => editMediaHandler(index)}><FontAwesomeIcon
+                                        icon={faPenToSquare}/></TableButton>
+                                    <TableButton color={"bg-red-500"} hoverColor={"hover:bg-red-700"}
+                                                 customFun={() => deleteMediaHandler(index)}><FontAwesomeIcon
+                                        icon={faTrash}/></TableButton>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </Table>
+            </div>
+            {/*End Media */}
         </>
     )
 };

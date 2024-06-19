@@ -1,7 +1,6 @@
 import {memo} from "react";
 
 const FormSelect = ({ label, error, value, data, customFun }) => {
-    console.log("select", value);
     return (
         <div className="col-span-12 md:col-span-6 mb-3">
             <label htmlFor={label} className="block mb-2 text-sm font-medium text-gray-700">{label}</label>

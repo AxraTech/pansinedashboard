@@ -12,8 +12,10 @@ import {useMutation, useQuery} from "@apollo/client";
 import {INSERT_CATEGORY} from "../../graphql/mutation/category.jsx";
 import {PRODUCT_CATEGORY_ALL, PRODUCT_SUB_CATEGORY_ALL} from "../../graphql/query/category.jsx";
 import FormSelect from "../../components/form/FormSelect.jsx";
+import useUploadFile from "../../utils/utils.jsx";
 
 const SubCategoryCreate = () => {
+    const [getFileUrl] = useUploadFile();
     const navigate = useNavigate();
     // useState
     const [data, setData] = useState({
@@ -73,7 +75,10 @@ const SubCategoryCreate = () => {
             try{
                 setLoading(true);
                 setLoadingText("Creating")
-                await insertCategory({ variables: { data }  })
+
+                const imageUrl = await getFileUrl("products", data.image_url, "image");
+                const formData = { ...data, image_url: imageUrl }
+                await insertCategory({ variables: { data: formData }  })
 
                 cancelHandler();
                 toast("Sub-Category Created Successfully.")

@@ -34,7 +34,7 @@ const Layout = () => {
                     <NavBar activeMenu={activeMenu} setActiveMenu={setActiveMenu}/>
                     {/*End Nav Bar*/}
 
-                    <div className="row-span-11 overflow-y-auto">
+                    <div className="row-span-11 overflow-y-auto py-5">
                         <div className="w-full h-full px-2 md:px-8">
                             <Outlet/>
                         </div>

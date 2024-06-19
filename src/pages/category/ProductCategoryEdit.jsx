@@ -11,8 +11,10 @@ import LoadingContext from "../../contexts/LoadingContext.jsx";
 import {useMutation, useQuery} from "@apollo/client";
 import {CATEGORY_BY_PK, PRODUCT_CATEGORY_ALL} from "../../graphql/query/category.jsx";
 import {UPDATE_CATEGORY_BY_PK} from "../../graphql/mutation/category.jsx";
+import useUploadFile from "../../utils/utils.jsx";
 
 const ProductCategoryEdit = () => {
+    const [getFileUrl] = useUploadFile();
     const navigate = useNavigate();
     const { id } = useParams();
     // useState
@@ -27,7 +29,7 @@ const ProductCategoryEdit = () => {
     const { setLoading, setLoadingText } = useContext(LoadingContext);
     // api call
     const {loading, data: category} = useQuery(CATEGORY_BY_PK, { variables: { id }})
-    const [updateCategoryByPk] = useMutation(UPDATE_CATEGORY_BY_PK, { refetchQueries: [ { query: CATEGORY_BY_PK }, { query: PRODUCT_CATEGORY_ALL } ]})
+    const [updateCategoryByPk] = useMutation(UPDATE_CATEGORY_BY_PK, { refetchQueries: [ { query: CATEGORY_BY_PK , variables: { id } }, { query: PRODUCT_CATEGORY_ALL } ]})
 
     useEffect(() => {
         if(category){
@@ -82,7 +84,12 @@ const ProductCategoryEdit = () => {
             try{
                 setLoading(true);
                 setLoadingText("Updating")
-                await updateCategoryByPk({ variables: { id, data }  })
+
+                let formData = { ...data };
+                if(data.image_url !== category.product_categories_by_pk.image_url) {
+                    formData.image_url = await getFileUrl("products", data.image_url, "image");
+                }
+                await updateCategoryByPk({ variables: { id, data: formData }  })
 
                 toast("Category Updated Successfully.")
             }catch (e) {

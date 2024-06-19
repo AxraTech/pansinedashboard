@@ -51,14 +51,17 @@ const ProductLists = () => {
                             </td>
                             <td className="px-6 py-4">
                                 {
-                                    d.body_html.length > 80 ? `${d.body_html.slice(0, 80)}.....` : d.body_html
+                                    d.body_html ?
+                                        d.body_html.length > 80 ? `${d.body_html.slice(0, 80)}.....` : d.body_html
+                                        :
+                                        "-"
                                 }
                             </td>
                             <td className="px-6 py-4">
                                 {d.product_category?.category_name}
                             </td>
                             <td className="px-6 py-4">
-                                $ {d.price}
+                                $ {d.price.toLocaleString("en-US")}
                             </td>
                             <td className="px-6 py-4">
                                 <TableButton color={"bg-blue-500"} hoverColor={"hover:bg-blue-700"} customFun={() => editProductHandler(d.id)}><FontAwesomeIcon icon={faPenToSquare} /></TableButton>

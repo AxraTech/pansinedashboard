@@ -1,4 +1,6 @@
 // eslint-disable-next-line react/prop-types
+import Button from "../Button.jsx";
+
 const Header = ({ headerHandler, category, title, customFun }) => {
     return (
         <div className="flex justify-between items-center mb-10">
@@ -7,9 +9,7 @@ const Header = ({ headerHandler, category, title, customFun }) => {
                 <p className="text-3xl font-extrabold tracking-tight text-slate-900">{title}</p>
             </div>
 
-            <button className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg ${customFun ? "inline-block": "hidden"}`} onClick={customFun}>
-                Create
-            </button>
+            <Button title="Create" customFun={customFun}/>
         </div>
     )
 }

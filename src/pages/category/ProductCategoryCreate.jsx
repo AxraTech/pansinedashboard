@@ -11,8 +11,10 @@ import LoadingContext from "../../contexts/LoadingContext.jsx";
 import {useMutation} from "@apollo/client";
 import {INSERT_CATEGORY} from "../../graphql/mutation/category.jsx";
 import {PRODUCT_CATEGORY_ALL} from "../../graphql/query/category.jsx";
+import useUploadFile from "../../utils/utils.jsx";
 
 const ProductCategoryCreate = () => {
+    const [getFileUrl] = useUploadFile();
     const navigate = useNavigate();
     // useState
     const [data, setData] = useState({
@@ -70,7 +72,10 @@ const ProductCategoryCreate = () => {
             try{
                 setLoading(true);
                 setLoadingText("Creating")
-                await insertCategory({ variables: { data }  })
+
+                const imageUrl = await getFileUrl("products", data.image_url, "image");
+                const formData = { ...data, image_url: imageUrl };
+                await insertCategory({ variables: { data: formData }  })
 
                 cancelHandler();
                 toast("Category Created Successfully.")

@@ -63,6 +63,24 @@ export const subCategoryFormValidation = (data) => {
     }
 
     return errors;
+};
+
+export const mediaFormValidation = (data) => {
+    const errors = {};
+
+    if(data.media_url === ""){
+        errors.media_url = 'Medial Url is required';
+    }
+
+    if(data.video_thumbnail_url === ""){
+        errors.video_thumbnail_url = 'Video Url is required';
+    }
+
+    if(data.media_type === ""){
+        errors.media_type = 'Media type is required';
+    }
+
+    return errors;
 }
 
 
