@@ -1,6 +1,6 @@
 import ProductLists from "../pages/product/ProductLists.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCircleNodes, faTable, faTableCells} from "@fortawesome/free-solid-svg-icons";
+import {faBasketShopping, faCircleNodes, faTable, faTableCells} from "@fortawesome/free-solid-svg-icons";
 import ProductCreate from "../pages/product/ProductCreate.jsx";
 import ProductEdit from "../pages/product/ProductEdit.jsx";
 import ProductCategoryList from "../pages/category/ProductCategoryList.jsx";
@@ -9,6 +9,8 @@ import ProductCategoryEdit from "../pages/category/ProductCategoryEdit.jsx";
 import SubCategoryList from "../pages/subCategory/SubCategoryList.jsx";
 import SubCategoryCreate from "../pages/subCategory/SubCategoryCreate.jsx";
 import SubCategoryEdit from "../pages/subCategory/SubCategoryEdit.jsx";
+import OrderLists from "../pages/order/OrderLists.jsx";
+import OrderDetail from "../pages/order/OrderDetail.jsx";
 
 export const routeData = [
     {
@@ -46,6 +48,14 @@ export const routeData = [
     {
         path: "/subcategory/edit/:id",
         element: <SubCategoryEdit/>
+    },
+    {
+        path: "/order",
+        element: <OrderLists/>
+    },
+    {
+        path: "/order/detail/:id",
+        element: <OrderDetail/>
     }
 ]
 
@@ -67,6 +77,16 @@ export const linkData = [
                 name: "Sub-Category List",
                 path: "/subcategory",
                 icon: <FontAwesomeIcon icon={faTableCells} />
+            }
+        ]
+    },
+    {
+        title: "Order",
+        links: [
+            {
+                name: "Order List",
+                path: "/order",
+                icon: <FontAwesomeIcon icon={faBasketShopping} />
             }
         ]
     }

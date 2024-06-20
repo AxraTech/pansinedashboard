@@ -125,7 +125,6 @@ const ProductEdit = () => {
 
                 toast("Product Updated Successfully.")
             }catch (e) {
-                console.log(e.message);
                 toast(e.message)
             }finally {
                 setLoading(false);
@@ -204,10 +203,6 @@ const ProductEdit = () => {
     }
 
     const deleteMediaHandler = async (id) => {
-        // const copArr = [ ...mediaDatas ];
-        // copArr.splice(id, 1);
-        // setMediaDatas(copArr);
-
         try {
             setLoading(true);
             setLoadingText("Deleting Product Media");

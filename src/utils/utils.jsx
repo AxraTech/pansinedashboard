@@ -16,7 +16,6 @@ export const uploadFile = async (file, fileUploadUrl, contentType) => {
         return uploadedImageUrl.url.split("?")[0];
     } catch (e) {
         alert(e)
-        console.log(e);
         throw new Error(e)
     }
 };
@@ -31,7 +30,6 @@ const useUploadFile = () => {
                 folder: folderName
             },
         }));
-        console.log( data);
         const uploadedFileUrl = await uploadFile(data, fileUploadUrl.data.getFileUploadUrl.fileUploadUrl, contentType);
 
         return uploadedFileUrl;
