@@ -21,7 +21,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
 import useUploadFile from "../../utils/utils.jsx";
 
-export const mediaHeader = ["Video", "Type", "Action"]
+export const mediaHeader = ["Video", "Thumbnail", "Type", "Action"]
 
 const ProductCreate = () => {
     const [getFileUrl] = useUploadFile();
@@ -97,8 +97,21 @@ const ProductCreate = () => {
                 setLoading(true);
                 setLoadingText("Creating")
 
+                // for mediaData upload
+                const newMediaDatas = [];
+                for (const eachData of mediaDatas) {
+                    const videoUrl = await getFileUrl("products", eachData.media_url, "video");
+                    const thumbnailUrl = await getFileUrl("products", eachData.video_thumbnail_url, "image");
+
+                    newMediaDatas.push({
+                        ...eachData,
+                        media_url: videoUrl,
+                        video_thumbnail_url: thumbnailUrl
+                    })
+                }
+
                 const imageUrl = await getFileUrl("products", data.main_image_url, "image");
-                const formData = { ...data, main_image_url: imageUrl, product_media: { data: mediaDatas } }
+                const formData = { ...data, main_image_url: imageUrl, product_media: { data: newMediaDatas } }
 
                 // product_media
                 await insertProduct({variables: { data: formData }})
@@ -228,7 +241,10 @@ const ProductCreate = () => {
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                 key={index}>
                                 <td className="px-6 py-4">
-                                    <img src={data.media_url} className="w-14 h-14 rounded-full" alt="image"/>
+                                    <video src={data.media_url} className="w-14 h-14 rounded-full"/>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <img src={data.video_thumbnail_url} className="w-14 h-14 rounded-full" alt="image"/>
                                 </td>
                                 <td className="px-6 py-4">
                                     {data.media_type}

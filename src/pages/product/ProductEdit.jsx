@@ -175,14 +175,23 @@ const ProductEdit = () => {
                 setLoading(true);
                 if(editId !== ""){
                         setLoadingText("Updating Product Media");
-                        const data = mediaData;
+
+                        const videoUrl = await getFileUrl("products", mediaData.media_url, "video");
+                        const thumbnailUrl = await getFileUrl("products", mediaData.video_thumbnail_url, "image");
+
+                        const data = { ...mediaData, media_url: videoUrl, video_thumbnail_url: thumbnailUrl };
                         delete data.__typename;
+
                         await updateProductMedia({ variables: { id: data.id, data: data }})
                         toast("Product Media update successful");
                 }else{
                     setLoadingText("Inserting Product Media");
-                    const data = { ...mediaData, product_id: id };
-                    console.log(data);
+
+                    const videoUrl = await getFileUrl("products", mediaData.media_url, "video");
+                    const thumbnailUrl = await getFileUrl("products", mediaData.video_thumbnail_url, "image");
+
+                    const data = { ...mediaData, media_url: videoUrl, video_thumbnail_url: thumbnailUrl, product_id: id };
+
                     await insertProductMedia({ variables: { data }})
                     toast("Product Media insert successful");
                 }
@@ -279,7 +288,10 @@ const ProductEdit = () => {
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                                 key={index}>
                                 <td className="px-6 py-4">
-                                    <img src={data.media_url} className="w-14 h-14 rounded-full" alt="image"/>
+                                    <video src={data.media_url} className="w-14 h-14 rounded-full"/>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <img src={data.video_thumbnail_url} className="w-14 h-14 rounded-full" alt="image"/>
                                 </td>
                                 <td className="px-6 py-4">
                                     {data.media_type}

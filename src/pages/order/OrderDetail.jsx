@@ -54,13 +54,13 @@ const OrderDetail = () => {
                     <img className="w-3/5 md:w-1/5 border-2 p-2 mx-auto" src={order.orders_by_pk.payment_receipt_image_url} alt="payment screenshot"/>
                 </div>
 
-                <Div title="Account Name" data={order.orders_by_pk.payment_account_name}/>
+                <Div className="col-span-2" title="Account Name" data={order.orders_by_pk.payment_account_name}/>
 
-                <Div title="Account Number" data={order.orders_by_pk.payment_account_number}/>
+                <Div className="col-span-2" title="Account Number" data={order.orders_by_pk.payment_account_number}/>
 
-                <Div title="Service Name" data={order.orders_by_pk.payment_service_name}/>
+                <Div className="col-span-2"  title="Service Name" data={order.orders_by_pk.payment_service_name}/>
 
-                <div className="col-span-4">
+                <div className="col-span-3">
                     <TableButton color="bg-red-600" hoverColor="hover:bg-red-500"  customFun={() => orderStatusHandler("cancel", "canceled")}>Cancel</TableButton>
                     <TableButton color="bg-blue-600" hoverColor="hover:bg-blue-500"  customFun={() => orderStatusHandler("accept", "accepted")}>Accept</TableButton>
                 </div>
@@ -118,13 +118,13 @@ const OrderDetail = () => {
             {/*Start Order Item*/}
             <p className="text-lg font-bold mb-3">Detail</p>
             <div className="grid grid-cols-12 gap-y-5 gap-x-3">
-                <Div title="Order Number" data={order.orders_by_pk.order_number}/>
+                <Div className="col-span-2" title="Order Number" data={order.orders_by_pk.order_number}/>
 
-                <Div title="Items Total" data={order.orders_by_pk.items_total}/>
+                <Div className="col-span-2" title="Items Total" data={order.orders_by_pk.items_total}/>
 
-                <Div title="Grand Total" data={order.orders_by_pk.grand_total.toLocaleString("en-US")}/>
+                <Div className="col-span-2" title="Grand Total" data={order.orders_by_pk.grand_total.toLocaleString("en-US")}/>
 
-                <Div title="Delivery Fee" data={order.orders_by_pk.delivery_fee}/>
+                <Div className="col-span-2" title="Delivery Fee" data={order.orders_by_pk.delivery_fee}/>
 
                 <div className="col-span-3 md:col-span-2">
                     <p className="font-medium mb-2">Status</p>
@@ -141,19 +141,19 @@ const OrderDetail = () => {
                     >{order.orders_by_pk.status.toUpperCase()}</span>
                 </div>
 
-                <Div title="Created At" data={order.orders_by_pk.created_at}/>
+                <Div className="col-span-2"  title="Created At" data={order.orders_by_pk.created_at}/>
 
-                <Div title="Delivering At"
+                <Div className="col-span-2" title="Delivering At"
                      data={order.orders_by_pk.delivering_at ? order.orders_by_pk.delivering_at : "-"}/>
 
-                <Div title="Delivered At"
+                <Div className="col-span-2" title="Delivered At"
                      data={order.orders_by_pk.delivered_at ? order.orders_by_pk.delivered_at : "-"}/>
 
-                <Div title="Accepted At" data={order.orders_by_pk.accepted_at ? order.orders_by_pk.accepted_at : "-"}/>
+                <Div className="col-span-2" title="Accepted At" data={order.orders_by_pk.accepted_at ? order.orders_by_pk.accepted_at : "-"}/>
 
-                <Div title="Canceled At" data={order.orders_by_pk.canceled_at ? order.orders_by_pk.canceled_at : "-"}/>
+                <Div className="col-span-2" title="Canceled At" data={order.orders_by_pk.canceled_at ? order.orders_by_pk.canceled_at : "-"}/>
 
-                <Div title="Returned At" data={order.orders_by_pk.returned_at ? order.orders_by_pk.returned_at : "-"}/>
+                <Div className="col-span-2" title="Returned At" data={order.orders_by_pk.returned_at ? order.orders_by_pk.returned_at : "-"}/>
             </div>
             {/*End Order Item*/}
 
@@ -162,10 +162,10 @@ const OrderDetail = () => {
             {/* Start User Info*/}
             <p className="text-lg font-bold mb-3">User Info</p>
             <div className="grid grid-cols-12 gap-y-5 gap-x-3">
-                <Div title="Name" data={order.orders_by_pk.customer_name}/>
-                <Div title="Address" data={order.orders_by_pk.customer_address}/>
-                <Div title="Phone" data={order.orders_by_pk.customer_phone}/>
-                <Div title="Note" data={order.orders_by_pk.customer_note ? order.orders_by_pk.customer_note : "-"}/>
+                <Div className="col-span-2" title="Name" data={order.orders_by_pk.customer_name}/>
+                <Div  className="col-span-2" title="Address" data={order.orders_by_pk.customer_address}/>
+                <Div className="col-span-2" title="Phone" data={order.orders_by_pk.customer_phone}/>
+                <Div className="col-span-2" title="Note" data={order.orders_by_pk.customer_note ? order.orders_by_pk.customer_note : "-"}/>
             </div>
             {/* End User Info*/}
         </>

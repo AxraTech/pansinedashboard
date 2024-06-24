@@ -8,7 +8,7 @@ const FormTwoUploads = ({ label1, label2, value1, value2, error1, error2, custom
                        className={`bg-white text-center rounded w-full max-w-sm min-h-[180px] py-4 px-4 flex flex-col items-center justify-center cursor-pointer border-2 ${error1 ? "border-red-300" : "border-gray-300"} mx-auto font-[sans-serif]`}>
                     {
                         value1 ?
-                            <img src={value1} alt="upload image"/>
+                            <video src={value1} controls={true}/>
                             :
                             <>
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-10 mb-3 fill-gray-400"
@@ -23,10 +23,10 @@ const FormTwoUploads = ({ label1, label2, value1, value2, error1, error2, custom
 
                                 <p className="text-gray-400 font-semibold text-sm">Drag & Drop or <span
                                     className="text-[#007bff]">Choose file</span> to upload</p>
-                                <p className="text-xs text-gray-400 mt-2">PNG, JPG SVG, WEBP, and GIF are Allowed.</p>
+                                <p className="text-xs text-gray-400 mt-2">Mp4 is Allowed.</p>
                             </>
                     }
-                    <input type="file" id={label1} className="hidden" onChange={customFun1}/>
+                    <input type="file" id={label1} className="hidden" onChange={customFun1} accept="video/*"/>
                 </label>
 
                 <p className={`${error1 ? "block" : "hidden"} text-center mt-2 text-sm text-red-500`}>
@@ -57,7 +57,7 @@ const FormTwoUploads = ({ label1, label2, value1, value2, error1, error2, custom
                                 <p className="text-xs text-gray-400 mt-2">PNG, JPG SVG, WEBP, and GIF are Allowed.</p>
                             </>
                     }
-                    <input type="file" id={label2} className="hidden" onChange={customFun2}/>
+                    <input type="file" id={label2} className="hidden" onChange={customFun2} />
                 </label>
 
                 <p className={`${error2 ? "block" : "hidden"} text-center mt-2 text-sm text-red-500`}>
