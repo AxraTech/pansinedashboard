@@ -26,7 +26,7 @@ const Login = () => {
     }
 
     const loginHandler = () => {
-        if(userData.username === "admin" && userData.password === "password"){
+        if(userData.username.trim() === "admin" && userData.password.trim() === "password"){
             window.localStorage.setItem("login", true);
             navigate("/product");
             toast("Login Successfully");
