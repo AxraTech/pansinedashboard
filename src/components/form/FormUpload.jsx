@@ -3,7 +3,7 @@ import {memo} from "react";
 const FormUpload = ({ value, error, customFun }) => {
     return(
         <div className="col-span-12 mb-3">
-            <label htmlFor="uploadFile1" className={`bg-white text-center rounded w-full max-w-sm min-h-[180px] py-4 px-4 flex flex-col items-center justify-center cursor-pointer border-2 ${error ? "border-red-300" : "border-gray-300"} mx-auto font-[sans-serif]`}>
+            <label htmlFor="uploadFile1" className={`bg-gray-700 text-center rounded w-full max-w-sm min-h-[180px] py-2 px-2 flex flex-col items-center justify-center cursor-pointer border-2 ${error ? "border-red-300" : "border-gray-700"} mx-auto font-[sans-serif]`}>
                 {
                     value ?
                         <img src={value} alt="upload image"/>

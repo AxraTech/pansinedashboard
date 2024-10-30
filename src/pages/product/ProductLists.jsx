@@ -39,12 +39,12 @@ const ProductLists = () => {
         <>
             <Header category="Product" title="List" customFun={createHandle}/>
 
-            <Table tableHeader={tableHeader} data={productLists?.products}>
+            <Table tableHeader={tableHeader} data={productLists?.products} >
                 {
                     productLists?.products.map(d => (
                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={d.id}>
-                            <td className="px-6 py-4">
-                                <img src={d.main_image_url} className="w-14 h-14 rounded-full"/>
+                            <td className="px-4   py-4">
+                                <img src={d.main_image_url} className=" h-14 border-2 border-white w-[90px] rounded-full"/>
                             </td>
                             <td className="px-6 py-4">
                                 {d.title}
@@ -63,7 +63,7 @@ const ProductLists = () => {
                             <td className="px-6 py-4">
                                 $ {d.price.toLocaleString("en-US")}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 ">
                                 <TableButton color={"bg-blue-500"} hoverColor={"hover:bg-blue-700"} customFun={() => editProductHandler(d.id)}><FontAwesomeIcon icon={faPenToSquare} /></TableButton>
                                 <TableButton color={"bg-red-500"} hoverColor={"hover:bg-red-700"} customFun={() => deleteProductHandler(d.id)}><FontAwesomeIcon icon={faTrash} /></TableButton>
                             </td>

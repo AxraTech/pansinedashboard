@@ -44,10 +44,10 @@ const ProductCategoryList = () => {
                     productCategory?.product_categories.map(each => (
                         <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                             key={each.id}>
-                            <td className="px-6 py-4">
+                             <td className="px-4   py-4">
                                 {
                                     each.image_url ?
-                                        <img src={each.image_url} className="w-14 h-14 rounded-full" alt="image"/>
+                                        <img src={each.image_url} className=" h-14 border-2 border-white w-[55px] rounded-full" alt="image"/>
                                         :
                                         <p>-</p>
                                 }

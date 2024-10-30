@@ -13,6 +13,7 @@ import {CATEGORY_BY_PK, PRODUCT_CATEGORY_ALL, PRODUCT_SUB_CATEGORY_ALL} from "..
 import {UPDATE_CATEGORY_BY_PK} from "../../graphql/mutation/category.jsx";
 import FormSelect from "../../components/form/FormSelect.jsx";
 import useUploadFile from "../../utils/utils.jsx";
+import { LoadingAnimation } from "../../components/LoadingAnimate.jsx";
 
 const SubCategoryEdit = () => {
     const [getFileUrl] = useUploadFile();
@@ -107,7 +108,7 @@ const SubCategoryEdit = () => {
     }
     // End Function
 
-    if(loading) return "Loading...."
+    if(loading) return <LoadingAnimation/>
 
     return(
         <>
