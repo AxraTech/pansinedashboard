@@ -85,7 +85,7 @@ const ProductEdit = () => {
   // useEffect
   useEffect(() => {
     if (product) {
-      console.table(product.products_by_pk);
+
       setData({
         title: product.products_by_pk.title,
         body_html: product.products_by_pk.body_html,

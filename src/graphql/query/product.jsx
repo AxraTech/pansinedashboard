@@ -26,6 +26,11 @@ query MyQuery($id: uuid!) {
     price
     product_category_id
     title
+    size
+    humidity
+    light
+    temperature
+    occasion
     product_category {
       category_name
     }
